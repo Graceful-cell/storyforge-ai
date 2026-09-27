@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>StoryForge AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 25px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .hero {
+      padding: 70px 7%;
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #b8c0d4;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    button {
+      border: none;
+      padding: 14px 22px;
+      border-radius: 10px;
+      background: #6c63ff;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 20px 7% 60px;
+    }
+
+    .card {
+      background: #151b2f;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 25px;
+    }
+
+    textarea,
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0 20px;
+      border-radius: 8px;
+      border: 1px solid #30384f;
+      background: #0d1325;
+      color: white;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    label {
+      display: block;
+      color: #d8dcec;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .scene {
+      border-left: 4px solid #6c63ff;
+      padding: 15px;
+      margin-top: 20px;
+      background: #10162a;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+
+    .scene p {
+      margin-top: 8px;
+      color: #c8cede;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero {
+        padding-top: 45px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🎬 StoryForge AI</div>
+  </header>
+
+  <section class="hero">
+
+    <h1>Turn One Idea Into an Entire Video</h1>
+
+    <p>
+      StoryForge AI helps content creators transform a simple idea
+      into a complete video production plan — including hooks,
+      scripts, scenes, storyboards, voice-over and visual prompts.
+    </p>
+
+    <button onclick="showCreator()">
+      Create My First Video
+    </button>
+
+  </section>
+
+  <section id="creator" class="container hidden">
+
+    <div class="card">
+
+      <h2>Create Your Video</h2>
+
+      <label>Video Title</label>
+
+      <input
+        id="title"
+        placeholder="Example: Why Children Struggle With Maths"
+      >
+
+      <label>Video Idea</label>
+
+      <textarea
+        id="idea"
+        placeholder="Describe the video you want to create..."
+      ></textarea>
+
+      <label>Target Audience</label>
+
+      <input
+        id="audience"
+        placeholder="Parents of secondary school students"
+      >
+
+      <label>Platform</label>
+
+      <select id="platform">
+        <option>YouTube</option>
+        <option>TikTok</option>
+        <option>Instagram</option>
+        <option>Facebook</option>
+        <option>YouTube Shorts</option>
+      </select>
+
+      <label>Duration</label>
+
+      <select id="duration">
+        <option>30 seconds</option>
+        <option>60 seconds</option>
+        <option>3 minutes</option>
+        <option>5 minutes</option>
+      </select>
+
+      <label>Video Style</label>
+
+      <select id="style">
+        <option>Educational</option>
+        <option>Storytelling</option>
+        <option>Documentary</option>
+        <option>Promotional</option>
+        <option>Motivational</option>
+        <option>Comedy</option>
+      </select>
+
+      <label>Video Tone</label>
+
+      <select id="tone">
+        <option>Friendly</option>
+        <option>Professional</option>
+        <option>Emotional</option>
+        <option>Exciting</option>
+        <option>Serious</option>
+      </select>
+
+      <button onclick="generateStory()">
+        Generate Production Plan
+      </button>
+
+    </div>
+
+    <div id="result" class="card hidden"></div>
+
+  </section>
+
+
+  <script>
+
+    function showCreator() {
+
+      document
+        .getElementById("creator")
+        .classList.remove("hidden");
+
+      window.scrollTo({
+        top: document.getElementById("creator").offsetTop,
+        behavior: "smooth"
+      });
+    }
+
+
+    function generateStory() {
+
+      const title =
+        document.getElementById("title").value;
+
+      const idea =
+        document.getElementById("idea").value;
+
+      const audience =
+        document.getElementById("audience").value;
+
+      const platform =
+        document.getElementById("platform").value;
+
+      const duration =
+        document.getElementById("duration").value;
+
+      const style =
+        document.getElementById("style").value;
+
+      const tone =
+        document.getElementById("tone").value;
+
+
+      if (!idea.trim()) {
+
+        alert("Please enter your video idea.");
+
+        return;
+      }
+
+
+      const result =
+        document.getElementById("result");
+
+
+      result.classList.remove("hidden");
+
+
+      result.innerHTML = `
+
+        <h2>
+          ${title || "Your Video"}
+        </h2>
+
+
+        <h3>🎯 Hook</h3>
+
+        <p>
+          What if the problem isn't what you think it is?
+          In this video, we're going to reveal the simple
+          truth behind this topic.
+        </p>
+
+
+        <h3>📝 Script</h3>
+
+        <p>
+          Today we're talking about:
+          <strong>${idea}</strong>
+        </p>
+
+        <p>
+          We'll explain the problem, why it happens,
+          and what viewers can do about it.
+        </p>
+
+
+        <h3>🎬 Storyboard</h3>
+
+
+        <div class="scene">
+
+          <h3>Scene 1 — The Hook</h3>
+
+          <p>
+            <strong>Duration:</strong>
+            0–5 seconds
+          </p>
+
+          <p>
+            <strong>Visual:</strong>
+            Show the main problem immediately.
+          </p>
+
+          <p>
+            <strong>Camera:</strong>
+            Close-up shot.
+          </p>
+
+          <p>
+            <strong>Voice-over:</strong>
+            Introduce the problem with a strong question.
+          </p>
+
+          <p>
+            <strong>On-screen text:</strong>
+            "Have you noticed this?"
+          </p>
+
+          <p>
+            <strong>AI Visual Prompt:</strong>
+            Create a cinematic close-up showing the
+            main subject experiencing the problem,
+            realistic lighting, natural expression,
+            professional social-media video style.
+          </p>
+
+        </div>
+
+
+        <div class="scene">
+
+          <h3>Scene 2 — The Problem</h3>
+
+          <p>
+            <strong>Duration:</strong>
+            5–15 seconds
+          </p>
+
+          <p>
+            <strong>Visual:</strong>
+            Show the audience experiencing the problem.
+          </p>
+
+          <p>
+            <strong>Camera:</strong>
+            Medium shot.
+          </p>
+
+          <p>
+            <strong>Voice-over:</strong>
+            Explain why the problem happens.
+          </p>
+
+          <p>
+            <strong>On-screen text:</strong>
+            "Here's why..."
+          </p>
+
+        </div>
+
+
+        <div class="scene">
+
+          <h3>Scene 3 — The Solution</h3>
+
+          <p>
+            <strong>Duration:</strong>
+            15–30 seconds
+          </p>
+
+          <p>
+            <strong>Visual:</strong>
+            Demonstrate the solution clearly.
+          </p>
+
+          <p>
+            <strong>Camera:</strong>
+            Dynamic close-up.
+          </p>
+
+          <p>
+            <strong>Voice-over:</strong>
+            Give the viewer a practical solution.
+          </p>
+
+          <p>
+            <strong>On-screen text:</strong>
+            "Try this."
+          </p>
+
+        </div>
+
+
+        <div class="scene">
+
+          <h3>Scene 4 — Call To Action</h3>
+
+          <p>
+            <strong>Duration:</strong>
+            Final seconds
+          </p>
+
+          <p>
+            <strong>Visual:</strong>
+            Show the desired result.
+          </p>
+
+          <p>
+            <strong>Camera:</strong>
+            Medium close-up.
+          </p>
+
+          <p>
+            <strong>Voice-over:</strong>
+            Tell viewers what to do next.
+          </p>
+
+          <p>
+            <strong>On-screen text:</strong>
+            "Follow for more."
+          </p>
+
+        </div>
+
+
+        <h3>👥 Target Audience</h3>
+
+        <p>
+          ${audience || "General audience"}
+        </p>
+
+
+        <h3>📱 Platform</h3>
+
+        <p>
+          ${platform}
+        </p>
+
+
+        <h3>⏱ Duration</h3>
+
+        <p>
+          ${duration}
+        </p>
+
+
+        <h3>🎨 Style</h3>
+
+        <p>
+          ${style}
+        </p>
+
+
+        <h3>🎙 Tone</h3>
+
+        <p>
+          ${tone}
+        </p>
+
+      `;
+
+
+      result.scrollIntoView({
+        behavior: "smooth"
+      });
+
+    }
+
+  </script>
+
+</body>
+  </html>
