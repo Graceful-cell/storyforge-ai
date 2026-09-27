@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StoryForge AI — Full Video Production Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="bg-indigo-600 p-2 rounded-lg">
+        <i class="fa-solid font-bold fa-wand-magic-sparkles text-xl text-white"></i>
+      </div>
+      <h1 class="text-xl font-bold tracking-tight text-white">StoryForge <span class="text-indigo-400">AI</span></h1>
+    </div>
+    <div class="text-xs bg-indigo-950 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-full">
+      v1.0 Pro Engine
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Controls & Input Form -->
+    <section class="lg:col-span-4 bg-slate-950/50 border border-slate-800 rounded-2xl p-6 flex flex-col gap-5 h-fit">
+      <div>
+        <h2 class="text-lg font-semibold text-white">1. Core Concept</h2>
+        <p class="text-xs text-slate-400">Transform your raw video idea into a complete production kit.</p>
+      </div>
+
+      <form id="generator-form" class="flex flex-col gap-4">
+        <!-- Topic/Idea Input -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Video Topic / Concept</label>
+          <textarea id="prompt-input" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-sm focus:outline-none focus:border-indigo-500 text-slate-100 placeholder-slate-500" placeholder="e.g., How black holes distort time and light in simple terms..."></textarea>
+        </div>
+
+        <!-- Target Platform -->
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1">Platform Format</label>
+          <select id="platform-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200">
+            <option value="shorts">Shorts / TikTok / Reels (9:16 Vertical)</option>
+            <option value="youtube">YouTube Longform (16:9 Landscape)</option>
+            <option value="linkedin">LinkedIn / X Professional (1:1 Square / 16:9)</option>
+          </select>
+        </div>
+
+        <!-- Tone & Duration Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Tone</label>
+            <select id="tone-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200">
+              <option value="energetic">High-Energy / Viral</option>
+              <option value="cinematic">Cinematic Storytelling</option>
+              <option value="educational">Educational / Explainer</option>
+              <option value="dramatic">Dramatic / Mystery</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-300 mb-1">Duration</label>
+            <select id="duration-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-sm focus:outline-none focus:border-indigo-500 text-slate-200">
+              <option value="30s">30 Seconds</option>
+              <option value="60s">60 Seconds</option>
+              <option value="3m">3 Minutes</option>
+              <option value="5m">5 Minutes</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="generate-btn" class="mt-2 w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20">
+          <i class="fa-solid fa-bolt"></i> Generate Production Kit
+        </button>
+      </form>
+    </section>
+
+    <!-- Right Column: Outputs Dashboard -->
+    <section class="lg:col-span-8 bg-slate-950/50 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
+      
+      <!-- Output Navigation Tabs -->
+      <div class="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto text-sm font-medium">
+        <button class="tab-btn px-4 py-2 rounded-lg bg-indigo-600 text-white" data-tab="script">
+          <i class="fa-solid fa-scroll mr-1"></i> Script
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg hover:bg-slate-800 text-slate-400" data-tab="storyboard">
+          <i class="fa-solid fa-clapperboard mr-1"></i> Storyboard
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg hover:bg-slate-800 text-slate-400" data-tab="prompts">
+          <i class="fa-solid fa-image mr-1"></i> Visual Prompts
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg hover:bg-slate-800 text-slate-400" data-tab="voice">
+          <i class="fa-solid fa-microphone mr-1"></i> Voice-Over
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg hover:bg-slate-800 text-slate-400" data-tab="captions">
+          <i class="fa-solid fa-closed-captioning mr-1"></i> Captions
+        </button>
+        <button class="tab-btn px-4 py-2 rounded-lg hover:bg-slate-800 text-slate-400" data-tab="social">
+          <i class="fa-solid fa-share-nodes mr-1"></i> Social Copy
+        </button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div id="tab-contents" class="flex-1 min-h-[450px]">
+        
+        <!-- Script Tab -->
+        <div id="tab-script" class="tab-content flex flex-col gap-3">
+          <div class="flex justify-between items-center">
+            <h3 class="text-sm font-semibold text-slate-300">Generated Voice-Over Script & Timings</h3>
+            <button class="text-xs text-indigo-400 hover:text-indigo-300 flex items-center gap-1"><i class="fa-regular fa-copy"></i> Copy Script</button>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-sm font-mono text-slate-300 leading-relaxed min-h-[350px]">
+            [00:00 - 00:05] Hook: What if I told you time stops inside a black hole?...
+          </div>
+        </div>
+
+        <!-- Storyboard Tab -->
+        <div id="tab-storyboard" class="tab-content hidden flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-slate-300">Scene Breakdown & Shot List</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-800 text-slate-400">
+                  <th class="p-3">Scene #</th>
+                  <th class="p-3">Shot Type</th>
+                  <th class="p-3">Visual Description</th>
+                  <th class="p-3">On-Screen Text</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/50 text-slate-300 font-mono">
+                <tr>
+                  <td class="p-3 font-bold text-indigo-400">01</td>
+                  <td class="p-3">Extreme Wide</td>
+                  <td class="p-3">Deep space swirling around a glowing singularity event horizon.</td>
+                  <td class="p-3 text-amber-400">TIME STOPS HERE</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Prompts Tab -->
+        <div id="tab-prompts" class="tab-content hidden flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-slate-300">AI Image/Video Prompts (Midjourney / Flux / Runway)</h3>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs font-mono text-slate-300 leading-relaxed">
+            /imagine prompt: Cinematic hyperrealistic view of a supermassive black hole bending light around its event horizon, cosmic dust, deep space, photorealistic 8k, --ar 9:16
+          </div>
+        </div>
+
+        <!-- Voice Tab -->
+        <div id="tab-voice" class="tab-content hidden flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-slate-300">Voice-Over Audio Synthesizer</h3>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 flex flex-col items-center justify-center gap-4 text-center">
+            <i class="fa-solid fa-circle-play text-4xl text-indigo-500 cursor-pointer hover:scale-105 transition"></i>
+            <p class="text-xs text-slate-400">Click to preview synthesized AI voice-over audio.</p>
+          </div>
+        </div>
+
+        <!-- Captions Tab -->
+        <div id="tab-captions" class="tab-content hidden flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-slate-300">Generated SRT / Subtitle File</h3>
+          <textarea class="w-full bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs font-mono text-slate-300 h-64 focus:outline-none" readonly>1
+00:00:00,000 --> 00:00:03,000
+What if I told you time stops inside a black hole?</textarea>
+        </div>
+
+        <!-- Social Tab -->
+        <div id="tab-social" class="tab-content hidden flex flex-col gap-3">
+          <h3 class="text-sm font-semibold text-slate-300">Optimized Title, Description & Hashtags</h3>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 flex flex-col gap-3">
+            <div>
+              <span class="text-slate-500 uppercase font-bold block mb-1">Title:</span>
+              <p class="font-semibold text-white">The Terrifying Reality of Black Holes 🌌 #SpaceFacts</p>
+            </div>
+            <div>
+              <span class="text-slate-500 uppercase font-bold block mb-1">Hashtags:</span>
+              <p class="text-indigo-400">#Space #Science #Astrophysics #Shorts #StoryForgeAI</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JavaScript for Tabs Switcher -->
+  <script>
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('bg-indigo-600', 'text-white');
+          b.classList.add('hover:bg-slate-800', 'text-slate-400');
+        });
+        btn.classList.add('bg-indigo-600', 'text-white');
+        btn.classList.remove('hover:bg-slate-800', 'text-slate-400');
+
+        const targetTab = btn.getAttribute('data-tab');
+        tabContents.forEach(content => {
+          if (content.id === `tab-${targetTab}`) {
+            content.classList.remove('hidden');
+          } else {
+            content.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
